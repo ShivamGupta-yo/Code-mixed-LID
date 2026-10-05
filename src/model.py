@@ -8,6 +8,9 @@ H = 768 for base/mBERT, K = number of tags):
                    --pool to words--> word vectors (B, W, H)
                      pooling="first": vector of each word's first subtoken
                      pooling="mean" : average of all subtokens of the word
+encoder_mode="static" replaces BERT by its word-embedding table only (no
+position embeddings, no attention layers): every subtoken gets the same vector
+in every sentence, i.e. a non-contextual representation.
                    --dropout--> BiLSTM (packed) --> (B, W, 2*lstm_hidden)
                    --dropout--> Linear --> logits (B, W, K)
 Softmax is applied inside CrossEntropyLoss during training and via argmax at
@@ -23,14 +26,30 @@ from .data import IGNORE_INDEX
 
 class LIDTagger(nn.Module):
     def __init__(self, encoder_name, num_labels, use_bilstm=True,
-                 lstm_hidden=256, lstm_layers=1, dropout=0.5, pooling="first"):
+                 lstm_hidden=256, lstm_layers=1, dropout=0.5, pooling="first",
+                 encoder_mode="contextual"):
         super().__init__()
         if pooling not in ("first", "mean"):
             raise ValueError(f"unknown pooling: {pooling}")
+        if encoder_mode not in ("contextual", "static"):
+            raise ValueError(f"unknown encoder_mode: {encoder_mode}")
         self.pooling = pooling
-        # Pretrained encoder; all its weights are fine-tuned (paper setting)
-        self.encoder = AutoModel.from_pretrained(encoder_name)
-        hidden = self.encoder.config.hidden_size  # 768 (base) / 1024 (large)
+        self.encoder_mode = encoder_mode
+
+        pretrained = AutoModel.from_pretrained(encoder_name)
+        if encoder_mode == "contextual":
+            # Full pretrained encoder; all its weights are fine-tuned
+            self.encoder = pretrained
+            hidden = pretrained.config.hidden_size  # 768 (base) / 1024 (large)
+        else:
+            # Non-contextual: copy ONLY the pretrained subtoken embedding table
+            # (same vocabulary and initial values as the contextual model) and
+            # discard the attention layers. Fine-tuned like the contextual model.
+            weights = pretrained.embeddings.word_embeddings.weight.detach().clone()
+            self.static_emb = nn.Embedding.from_pretrained(weights, freeze=False)
+            hidden = weights.size(1)
+            self.encoder = None
+            del pretrained
 
         # nn.LSTM's own `dropout` argument only acts BETWEEN stacked layers,
         # so with 1 layer it does nothing (PyTorch even warns). To apply the
@@ -57,9 +76,13 @@ class LIDTagger(nn.Module):
     # ------------------------------------------------------------------ #
     def forward(self, input_ids, attention_mask, word_starts, word_mask,
                 labels=None, word_index=None, **_):
-        # 1) Contextual subtoken vectors from BERT: (B, L, H)
-        sub = self.encoder(input_ids=input_ids,
-                           attention_mask=attention_mask).last_hidden_state
+        # 1) Subtoken vectors: (B, L, H)
+        if self.encoder_mode == "contextual":
+            sub = self.encoder(input_ids=input_ids,
+                               attention_mask=attention_mask).last_hidden_state
+        else:
+            # same vector for a subtoken in every sentence (no context)
+            sub = self.static_emb(input_ids)
 
         # 2) One vector per word: (B, W, H)
         if self.pooling == "first":
@@ -123,6 +146,7 @@ def build_model(cfg, num_labels):
         lstm_layers=m["lstm_layers"],
         dropout=m["dropout"],
         pooling=m.get("pooling", "first"),  # older configs: first subtoken
+        encoder_mode=m.get("encoder_mode", "contextual"),
     )
 
 
@@ -138,7 +162,9 @@ def get_param_groups(model, lr_encoder, lr_head, weight_decay):
     for name, p in model.named_parameters():
         if not p.requires_grad:
             continue
-        part = "enc" if name.startswith("encoder.") else "head"
+        # pretrained parts (full encoder or static embedding table) get the
+        # small encoder LR; the new Bi-LSTM/classifier get the larger head LR
+        part = "enc" if name.startswith(("encoder.", "static_emb.")) else "head"
         decay = not any(nd in name for nd in no_decay)
         groups[(part, decay)].append(p)
 
