@@ -1,0 +1,303 @@
+{
+  "experiment": "lince_hineng_mbert_bilstm",
+  "seed": 43,
+  "best_epoch": 4,
+  "epochs_run": 7,
+  "train_time_sec": 179.6,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "config": {
+    "experiment_name": "lince_hineng_mbert_bilstm",
+    "data": {
+      "train_path": "data/raw/lince_hineng/train-00000-of-00001.parquet",
+      "dev_path": "data/raw/lince_hineng/dev-00000-of-00001.parquet",
+      "token_col": "sentence",
+      "label_col": "labels",
+      "max_subtokens": 512,
+      "val_fraction": 0.1,
+      "split_seed": 13,
+      "cm_only": false,
+      "cm_lang_tags": [
+        "lang1",
+        "lang2"
+      ]
+    },
+    "model": {
+      "encoder_name": "bert-base-multilingual-cased",
+      "use_bilstm": true,
+      "lstm_hidden": 256,
+      "lstm_layers": 1,
+      "dropout": 0.5,
+      "head": "softmax"
+    },
+    "train": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "batch_size": 32,
+      "max_epochs": 20,
+      "patience": 3,
+      "lr_encoder": 2e-05,
+      "lr_head": 0.001,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1,
+      "grad_clip": 1.0
+    },
+    "output": {
+      "dir": "outputs"
+    }
+  },
+  "data_stats": {
+    "n_train": 4339,
+    "n_val": 482,
+    "n_dev": 744,
+    "dropped_train_ids": [
+      "# sent_enum = 217",
+      "# sent_enum = 1902"
+    ],
+    "n_unk_replaced": 0,
+    "label2id": {
+      "ambiguous": 0,
+      "fw": 1,
+      "lang1": 2,
+      "lang2": 3,
+      "mixed": 4,
+      "ne": 5,
+      "other": 6,
+      "unk": 7
+    },
+    "train_label_counts": {
+      "ne": 5691,
+      "lang2": 16936,
+      "other": 12781,
+      "lang1": 49681,
+      "fw": 377,
+      "mixed": 36,
+      "ambiguous": 7,
+      "unk": 10
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.7880438952398506,
+      "val_loss": 0.2069026230060919,
+      "val_weighted_f1": 0.9326547506695682,
+      "val_macro_f1": 0.5032304031054561
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.1884887691341395,
+      "val_loss": 0.1566354452357444,
+      "val_weighted_f1": 0.953414297747145,
+      "val_macro_f1": 0.5281024700376283
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.13437967572151832,
+      "val_loss": 0.14049740555362963,
+      "val_weighted_f1": 0.9599662748351165,
+      "val_macro_f1": 0.536391336490357
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.09629280890318379,
+      "val_loss": 0.13558265087745092,
+      "val_weighted_f1": 0.9614918090644267,
+      "val_macro_f1": 0.5374332320852748
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.06924701705507906,
+      "val_loss": 0.13696220312820404,
+      "val_weighted_f1": 0.9638624618467146,
+      "val_macro_f1": 0.539995028500906
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.05264238768062233,
+      "val_loss": 0.14192256271412934,
+      "val_weighted_f1": 0.9642714514610805,
+      "val_macro_f1": 0.5495741887591251
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.04253945982346765,
+      "val_loss": 0.1517379890419181,
+      "val_weighted_f1": 0.9649581279781835,
+      "val_macro_f1": 0.5418990687977484
+    }
+  ],
+  "dev_metrics": {
+    "n_words": 15446,
+    "accuracy": 0.9654279425093876,
+    "weighted_precision": 0.9634465551981094,
+    "weighted_recall": 0.9654279425093876,
+    "weighted_f1": 0.9644215413457055,
+    "macro_f1": 0.4680733402392352,
+    "macro_f1_classes": [
+      "ambiguous",
+      "fw",
+      "lang1",
+      "lang2",
+      "mixed",
+      "ne",
+      "other",
+      "unk"
+    ],
+    "micro_f1": 0.9654279425093876,
+    "per_class": {
+      "ambiguous": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "n_predicted": 0
+      },
+      "fw": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 29,
+        "n_predicted": 0
+      },
+      "lang1": {
+        "precision": 0.9804574727959139,
+        "recall": 0.9814382571968434,
+        "f1": 0.9809476198411375,
+        "support": 8997,
+        "n_predicted": 9006
+      },
+      "lang2": {
+        "precision": 0.9502262443438914,
+        "recall": 0.9528130671506352,
+        "f1": 0.9515178975985501,
+        "support": 3306,
+        "n_predicted": 3315
+      },
+      "mixed": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5,
+        "n_predicted": 0
+      },
+      "ne": {
+        "precision": 0.8101545253863135,
+        "recall": 0.8388571428571429,
+        "f1": 0.8242560359348681,
+        "support": 875,
+        "n_predicted": 906
+      },
+      "other": {
+        "precision": 0.9905362776025236,
+        "recall": 0.9852084267144778,
+        "f1": 0.9878651685393258,
+        "support": 2231,
+        "n_predicted": 2219
+      },
+      "unk": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "n_predicted": 0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "ambiguous",
+        "fw",
+        "lang1",
+        "lang2",
+        "mixed",
+        "ne",
+        "other",
+        "unk"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          8,
+          14,
+          0,
+          7,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          8830,
+          77,
+          0,
+          80,
+          10,
+          0
+        ],
+        [
+          0,
+          0,
+          70,
+          3150,
+          0,
+          80,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          73,
+          65,
+          0,
+          734,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          23,
+          7,
+          0,
+          3,
+          2198,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}

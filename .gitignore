@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Secrets / editor
+.env
+.vscode/
+.idea/
+
+# Data: ignore contents, keep folder structure
+/data/**
+!/data/**/
+!/data/**/.gitkeep
+
+# Outputs: ignore checkpoints/logs, keep results
+/outputs/**
+!/outputs/**/
+!/outputs/**/.gitkeep
+!/outputs/results/**
+
+# Model weights anywhere in the repo
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+
+# Slurm / experiment trackers
+slurm-*.out
+slurm-*.err
+wandb/
+runs/

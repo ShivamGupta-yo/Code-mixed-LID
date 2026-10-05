@@ -1,0 +1,41 @@
+{
+  "experiment": "lince_hineng_mbert_bilstm_esf1_cm",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "per_seed": {
+    "42": {
+      "weighted_f1": 0.9610247292707847,
+      "macro_f1": 0.5015906000022469,
+      "accuracy": 0.962190858474686,
+      "best_epoch": 12
+    },
+    "43": {
+      "weighted_f1": 0.961417442334375,
+      "macro_f1": 0.4977029202620122,
+      "accuracy": 0.962126116793992,
+      "best_epoch": 17
+    },
+    "44": {
+      "weighted_f1": 0.960887595523369,
+      "macro_f1": 0.4649163072472554,
+      "accuracy": 0.9623203418360741,
+      "best_epoch": 9
+    }
+  },
+  "early_stop_metric": "val_weighted_f1",
+  "weighted_f1": {
+    "mean": 96.11099223761762,
+    "std": 0.027500510847614127
+  },
+  "macro_f1": {
+    "mean": 48.80699425038381,
+    "std": 2.014563557291781
+  },
+  "accuracy": {
+    "mean": 96.22124390349175,
+    "std": 0.009889455079968008
+  }
+}

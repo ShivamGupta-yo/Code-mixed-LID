@@ -1,0 +1,334 @@
+{
+  "experiment": "lince_hineng_mbert_nobilstm_esf1",
+  "seed": 43,
+  "best_epoch": 8,
+  "early_stop_metric": "val_weighted_f1",
+  "best_val_score": 0.9647622957852795,
+  "epochs_run": 11,
+  "train_time_sec": 279.4,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "config": {
+    "experiment_name": "lince_hineng_mbert_nobilstm_esf1",
+    "data": {
+      "train_path": "data/raw/lince_hineng/train-00000-of-00001.parquet",
+      "dev_path": "data/raw/lince_hineng/dev-00000-of-00001.parquet",
+      "token_col": "sentence",
+      "label_col": "labels",
+      "max_subtokens": 512,
+      "val_fraction": 0.1,
+      "split_seed": 13,
+      "cm_only": false,
+      "cm_lang_tags": [
+        "lang1",
+        "lang2"
+      ]
+    },
+    "model": {
+      "encoder_name": "bert-base-multilingual-cased",
+      "use_bilstm": false,
+      "lstm_hidden": 256,
+      "lstm_layers": 1,
+      "dropout": 0.5,
+      "head": "softmax"
+    },
+    "train": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "batch_size": 32,
+      "max_epochs": 20,
+      "patience": 3,
+      "early_stop_metric": "val_weighted_f1",
+      "lr_encoder": 2e-05,
+      "lr_head": 0.001,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1,
+      "grad_clip": 1.0
+    },
+    "output": {
+      "dir": "outputs"
+    }
+  },
+  "data_stats": {
+    "n_train": 4339,
+    "n_val": 482,
+    "n_dev": 744,
+    "dropped_train_ids": [
+      "# sent_enum = 217",
+      "# sent_enum = 1902"
+    ],
+    "n_unk_replaced": 0,
+    "label2id": {
+      "ambiguous": 0,
+      "fw": 1,
+      "lang1": 2,
+      "lang2": 3,
+      "mixed": 4,
+      "ne": 5,
+      "other": 6,
+      "unk": 7
+    },
+    "train_label_counts": {
+      "ne": 5691,
+      "lang2": 16936,
+      "other": 12781,
+      "lang1": 49681,
+      "fw": 377,
+      "mixed": 36,
+      "ambiguous": 7,
+      "unk": 10
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.771504372225374,
+      "val_loss": 0.20031385705783697,
+      "val_weighted_f1": 0.9349958485792614,
+      "val_macro_f1": 0.5084419150142864
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.18472146721234803,
+      "val_loss": 0.15435303320562396,
+      "val_weighted_f1": 0.951105812853196,
+      "val_macro_f1": 0.5257211330096421
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.12893136905124855,
+      "val_loss": 0.13667542029974336,
+      "val_weighted_f1": 0.9599832037926059,
+      "val_macro_f1": 0.5361426173980859
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.09246641035125186,
+      "val_loss": 0.13522323639254216,
+      "val_weighted_f1": 0.9611869681636563,
+      "val_macro_f1": 0.5366625238565371
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0660910068733701,
+      "val_loss": 0.1393080707778174,
+      "val_weighted_f1": 0.9632443451308438,
+      "val_macro_f1": 0.5484134824150418
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.049185597590185516,
+      "val_loss": 0.13878100760445938,
+      "val_weighted_f1": 0.9632003516135645,
+      "val_macro_f1": 0.5483666647187396
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.03531497378054907,
+      "val_loss": 0.14904960893311664,
+      "val_weighted_f1": 0.9639021933721837,
+      "val_macro_f1": 0.5496497564717393
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.027373074592697957,
+      "val_loss": 0.16707975867265182,
+      "val_weighted_f1": 0.9647622957852795,
+      "val_macro_f1": 0.5496291234711779
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.020051140795166938,
+      "val_loss": 0.17933576652650504,
+      "val_weighted_f1": 0.9626783498446269,
+      "val_macro_f1": 0.5482607088096548
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.01704010419155493,
+      "val_loss": 0.18393307337642956,
+      "val_weighted_f1": 0.9643266641501302,
+      "val_macro_f1": 0.550288234973341
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.01463806636013786,
+      "val_loss": 0.2121305376543707,
+      "val_weighted_f1": 0.9622601312744039,
+      "val_macro_f1": 0.5478244686457298
+    }
+  ],
+  "dev_metrics": {
+    "n_words": 15446,
+    "accuracy": 0.9670464845267384,
+    "weighted_precision": 0.9674375418036621,
+    "weighted_recall": 0.9670464845267384,
+    "weighted_f1": 0.9668388337113628,
+    "macro_f1": 0.5606242240128037,
+    "macro_f1_classes": [
+      "ambiguous",
+      "fw",
+      "lang1",
+      "lang2",
+      "mixed",
+      "ne",
+      "other",
+      "unk"
+    ],
+    "micro_f1": 0.9670464845267384,
+    "per_class": {
+      "ambiguous": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "n_predicted": 0
+      },
+      "fw": {
+        "precision": 1.0,
+        "recall": 0.3103448275862069,
+        "f1": 0.47368421052631576,
+        "support": 29,
+        "n_predicted": 9
+      },
+      "lang1": {
+        "precision": 0.9815185927410376,
+        "recall": 0.9798821829498722,
+        "f1": 0.9806997052116359,
+        "support": 8997,
+        "n_predicted": 8982
+      },
+      "lang2": {
+        "precision": 0.9588665447897623,
+        "recall": 0.9519056261343013,
+        "f1": 0.9553734061930783,
+        "support": 3306,
+        "n_predicted": 3282
+      },
+      "mixed": {
+        "precision": 0.3333333333333333,
+        "recall": 0.2,
+        "f1": 0.25,
+        "support": 5,
+        "n_predicted": 3
+      },
+      "ne": {
+        "precision": 0.8098290598290598,
+        "recall": 0.8662857142857143,
+        "f1": 0.8371065709552733,
+        "support": 875,
+        "n_predicted": 936
+      },
+      "other": {
+        "precision": 0.9874664279319606,
+        "recall": 0.9887942626624832,
+        "f1": 0.9881298992161254,
+        "support": 2231,
+        "n_predicted": 2234
+      },
+      "unk": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "n_predicted": 0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "ambiguous",
+        "fw",
+        "lang1",
+        "lang2",
+        "mixed",
+        "ne",
+        "other",
+        "unk"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          9,
+          4,
+          9,
+          0,
+          7,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          8816,
+          68,
+          1,
+          97,
+          15,
+          0
+        ],
+        [
+          0,
+          0,
+          81,
+          3147,
+          1,
+          72,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          60,
+          51,
+          0,
+          758,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          19,
+          5,
+          0,
+          1,
+          2206,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}

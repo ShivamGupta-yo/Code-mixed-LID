@@ -1,0 +1,321 @@
+{
+  "experiment": "lince_hineng_mbert_bilstm_meanpool_esf1",
+  "seed": 44,
+  "best_epoch": 6,
+  "early_stop_metric": "val_weighted_f1",
+  "best_val_score": 0.9657585379725482,
+  "epochs_run": 9,
+  "train_time_sec": 249.2,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "config": {
+    "experiment_name": "lince_hineng_mbert_bilstm_meanpool_esf1",
+    "data": {
+      "train_path": "data/raw/lince_hineng/train-00000-of-00001.parquet",
+      "dev_path": "data/raw/lince_hineng/dev-00000-of-00001.parquet",
+      "token_col": "sentence",
+      "label_col": "labels",
+      "max_subtokens": 512,
+      "val_fraction": 0.1,
+      "split_seed": 13,
+      "cm_only": false,
+      "cm_lang_tags": [
+        "lang1",
+        "lang2"
+      ]
+    },
+    "model": {
+      "encoder_name": "bert-base-multilingual-cased",
+      "use_bilstm": true,
+      "lstm_hidden": 256,
+      "lstm_layers": 1,
+      "dropout": 0.5,
+      "head": "softmax",
+      "pooling": "mean"
+    },
+    "train": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "batch_size": 32,
+      "max_epochs": 20,
+      "patience": 3,
+      "early_stop_metric": "val_weighted_f1",
+      "lr_encoder": 2e-05,
+      "lr_head": 0.001,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1,
+      "grad_clip": 1.0
+    },
+    "output": {
+      "dir": "outputs"
+    }
+  },
+  "data_stats": {
+    "n_train": 4339,
+    "n_val": 482,
+    "n_dev": 744,
+    "dropped_train_ids": [
+      "# sent_enum = 217",
+      "# sent_enum = 1902"
+    ],
+    "n_unk_replaced": 0,
+    "label2id": {
+      "ambiguous": 0,
+      "fw": 1,
+      "lang1": 2,
+      "lang2": 3,
+      "mixed": 4,
+      "ne": 5,
+      "other": 6,
+      "unk": 7
+    },
+    "train_label_counts": {
+      "ne": 5691,
+      "lang2": 16936,
+      "other": 12781,
+      "lang1": 49681,
+      "fw": 377,
+      "mixed": 36,
+      "ambiguous": 7,
+      "unk": 10
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.8226670521957591,
+      "val_loss": 0.2159408334085765,
+      "val_weighted_f1": 0.9295034449074208,
+      "val_macro_f1": 0.5010378465198806
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.18419661235099247,
+      "val_loss": 0.150926619887159,
+      "val_weighted_f1": 0.9533427477436776,
+      "val_macro_f1": 0.5290118869197931
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.12938469987818751,
+      "val_loss": 0.13529091251826067,
+      "val_weighted_f1": 0.9591710708891185,
+      "val_macro_f1": 0.5356787484279141
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.08804073535612209,
+      "val_loss": 0.13742500552761833,
+      "val_weighted_f1": 0.9618094078335132,
+      "val_macro_f1": 0.5384933031245568
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.06510312482385767,
+      "val_loss": 0.13999316768496586,
+      "val_weighted_f1": 0.9614027473564095,
+      "val_macro_f1": 0.5383922355387442
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.04877709631251578,
+      "val_loss": 0.14733211493297518,
+      "val_weighted_f1": 0.9657585379725482,
+      "val_macro_f1": 0.5509161951300078
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.038923248462071874,
+      "val_loss": 0.1440092640312482,
+      "val_weighted_f1": 0.9654508782802891,
+      "val_macro_f1": 0.5517482367068032
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.029040444379496617,
+      "val_loss": 0.16671350028966964,
+      "val_weighted_f1": 0.9652008091448995,
+      "val_macro_f1": 0.5507371377551761
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.023387311771248486,
+      "val_loss": 0.1657798061912042,
+      "val_weighted_f1": 0.9653631967844891,
+      "val_macro_f1": 0.5505772285064432
+    }
+  ],
+  "dev_metrics": {
+    "n_words": 15446,
+    "accuracy": 0.9657516509128578,
+    "weighted_precision": 0.9649819152815935,
+    "weighted_recall": 0.9657516509128578,
+    "weighted_f1": 0.9650834752884649,
+    "macro_f1": 0.5138564423727979,
+    "macro_f1_classes": [
+      "ambiguous",
+      "fw",
+      "lang1",
+      "lang2",
+      "mixed",
+      "ne",
+      "other",
+      "unk"
+    ],
+    "micro_f1": 0.9657516509128578,
+    "per_class": {
+      "ambiguous": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "n_predicted": 0
+      },
+      "fw": {
+        "precision": 0.7,
+        "recall": 0.2413793103448276,
+        "f1": 0.358974358974359,
+        "support": 29,
+        "n_predicted": 10
+      },
+      "lang1": {
+        "precision": 0.9742154926486724,
+        "recall": 0.9868845170612426,
+        "f1": 0.980509082877809,
+        "support": 8997,
+        "n_predicted": 9114
+      },
+      "lang2": {
+        "precision": 0.9657000311817898,
+        "recall": 0.9367816091954023,
+        "f1": 0.9510210348533702,
+        "support": 3306,
+        "n_predicted": 3207
+      },
+      "mixed": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5,
+        "n_predicted": 0
+      },
+      "ne": {
+        "precision": 0.8277027027027027,
+        "recall": 0.84,
+        "f1": 0.8338060124787294,
+        "support": 875,
+        "n_predicted": 888
+      },
+      "other": {
+        "precision": 0.9874270318814549,
+        "recall": 0.9856566562079785,
+        "f1": 0.9865410497981157,
+        "support": 2231,
+        "n_predicted": 2227
+      },
+      "unk": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "n_predicted": 0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "ambiguous",
+        "fw",
+        "lang1",
+        "lang2",
+        "mixed",
+        "ne",
+        "other",
+        "unk"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          7,
+          7,
+          8,
+          0,
+          7,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          8879,
+          41,
+          0,
+          68,
+          9,
+          0
+        ],
+        [
+          0,
+          2,
+          123,
+          3097,
+          0,
+          72,
+          12,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          1,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          76,
+          58,
+          0,
+          735,
+          5,
+          0
+        ],
+        [
+          0,
+          0,
+          27,
+          2,
+          0,
+          3,
+          2199,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}

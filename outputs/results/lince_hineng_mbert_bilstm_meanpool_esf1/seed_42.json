@@ -1,0 +1,321 @@
+{
+  "experiment": "lince_hineng_mbert_bilstm_meanpool_esf1",
+  "seed": 42,
+  "best_epoch": 6,
+  "early_stop_metric": "val_weighted_f1",
+  "best_val_score": 0.9663326584498197,
+  "epochs_run": 9,
+  "train_time_sec": 247.1,
+  "gpu": "NVIDIA A100-SXM4-40GB",
+  "config": {
+    "experiment_name": "lince_hineng_mbert_bilstm_meanpool_esf1",
+    "data": {
+      "train_path": "data/raw/lince_hineng/train-00000-of-00001.parquet",
+      "dev_path": "data/raw/lince_hineng/dev-00000-of-00001.parquet",
+      "token_col": "sentence",
+      "label_col": "labels",
+      "max_subtokens": 512,
+      "val_fraction": 0.1,
+      "split_seed": 13,
+      "cm_only": false,
+      "cm_lang_tags": [
+        "lang1",
+        "lang2"
+      ]
+    },
+    "model": {
+      "encoder_name": "bert-base-multilingual-cased",
+      "use_bilstm": true,
+      "lstm_hidden": 256,
+      "lstm_layers": 1,
+      "dropout": 0.5,
+      "head": "softmax",
+      "pooling": "mean"
+    },
+    "train": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "batch_size": 32,
+      "max_epochs": 20,
+      "patience": 3,
+      "early_stop_metric": "val_weighted_f1",
+      "lr_encoder": 2e-05,
+      "lr_head": 0.001,
+      "weight_decay": 0.01,
+      "warmup_ratio": 0.1,
+      "grad_clip": 1.0
+    },
+    "output": {
+      "dir": "outputs"
+    }
+  },
+  "data_stats": {
+    "n_train": 4339,
+    "n_val": 482,
+    "n_dev": 744,
+    "dropped_train_ids": [
+      "# sent_enum = 217",
+      "# sent_enum = 1902"
+    ],
+    "n_unk_replaced": 0,
+    "label2id": {
+      "ambiguous": 0,
+      "fw": 1,
+      "lang1": 2,
+      "lang2": 3,
+      "mixed": 4,
+      "ne": 5,
+      "other": 6,
+      "unk": 7
+    },
+    "train_label_counts": {
+      "ne": 5691,
+      "lang2": 16936,
+      "other": 12781,
+      "lang1": 49681,
+      "fw": 377,
+      "mixed": 36,
+      "ambiguous": 7,
+      "unk": 10
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.798824407264567,
+      "val_loss": 0.21409532337801815,
+      "val_weighted_f1": 0.9285736164868587,
+      "val_macro_f1": 0.4986538087781613
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.18588198189886643,
+      "val_loss": 0.15013678271466183,
+      "val_weighted_f1": 0.9534817807752178,
+      "val_macro_f1": 0.5284812981917861
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.13200305903656914,
+      "val_loss": 0.1219321566742945,
+      "val_weighted_f1": 0.9626114637939948,
+      "val_macro_f1": 0.5388523765331373
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.09221591254832748,
+      "val_loss": 0.1258751574298593,
+      "val_weighted_f1": 0.9624601172097289,
+      "val_macro_f1": 0.53923228373137
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.0674702844373656,
+      "val_loss": 0.14150488150325646,
+      "val_weighted_f1": 0.962673963063522,
+      "val_macro_f1": 0.5482180177106095
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.05007352833677107,
+      "val_loss": 0.12577551215629737,
+      "val_weighted_f1": 0.9663326584498197,
+      "val_macro_f1": 0.5953548580238504
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.03772910972764312,
+      "val_loss": 0.14985659308080684,
+      "val_weighted_f1": 0.9640533997205548,
+      "val_macro_f1": 0.5493101601886314
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.028622103584293332,
+      "val_loss": 0.15942914720666904,
+      "val_weighted_f1": 0.9641321732581988,
+      "val_macro_f1": 0.5488907865156692
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.02251080293571659,
+      "val_loss": 0.16009585417965924,
+      "val_weighted_f1": 0.9639868020821007,
+      "val_macro_f1": 0.5472350085982748
+    }
+  ],
+  "dev_metrics": {
+    "n_words": 15446,
+    "accuracy": 0.966463809400492,
+    "weighted_precision": 0.9662051773946605,
+    "weighted_recall": 0.966463809400492,
+    "weighted_f1": 0.9660935696397138,
+    "macro_f1": 0.5252769189963585,
+    "macro_f1_classes": [
+      "ambiguous",
+      "fw",
+      "lang1",
+      "lang2",
+      "mixed",
+      "ne",
+      "other",
+      "unk"
+    ],
+    "micro_f1": 0.966463809400492,
+    "per_class": {
+      "ambiguous": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1,
+        "n_predicted": 0
+      },
+      "fw": {
+        "precision": 0.8181818181818182,
+        "recall": 0.3103448275862069,
+        "f1": 0.45,
+        "support": 29,
+        "n_predicted": 11
+      },
+      "lang1": {
+        "precision": 0.9830224505752262,
+        "recall": 0.978214960542403,
+        "f1": 0.9806128133704736,
+        "support": 8997,
+        "n_predicted": 8953
+      },
+      "lang2": {
+        "precision": 0.9489094711682103,
+        "recall": 0.9606775559588627,
+        "f1": 0.9547572523673531,
+        "support": 3306,
+        "n_predicted": 3347
+      },
+      "mixed": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 5,
+        "n_predicted": 0
+      },
+      "ne": {
+        "precision": 0.8136714443219405,
+        "recall": 0.8434285714285714,
+        "f1": 0.8282828282828283,
+        "support": 875,
+        "n_predicted": 907
+      },
+      "other": {
+        "precision": 0.9892280071813285,
+        "recall": 0.9878978036754819,
+        "f1": 0.988562457950213,
+        "support": 2231,
+        "n_predicted": 2228
+      },
+      "unk": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2,
+        "n_predicted": 0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "ambiguous",
+        "fw",
+        "lang1",
+        "lang2",
+        "mixed",
+        "ne",
+        "other",
+        "unk"
+      ],
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          9,
+          3,
+          13,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          8801,
+          81,
+          0,
+          102,
+          12,
+          0
+        ],
+        [
+          0,
+          1,
+          62,
+          3176,
+          0,
+          60,
+          7,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          2,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          64,
+          70,
+          0,
+          738,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          21,
+          5,
+          0,
+          1,
+          2204,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}

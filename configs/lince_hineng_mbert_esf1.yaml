@@ -1,0 +1,39 @@
+# configs/lince_hineng_mbert_esf1.yaml
+# Same as lince_hineng_mbert.yaml, but early stopping on val weighted F1.
+# All paths are relative to the repo root (lid-codemixed/).
+
+experiment_name: lince_hineng_mbert_bilstm_esf1
+
+data:
+  train_path: data/raw/lince_hineng/train-00000-of-00001.parquet
+  dev_path: data/raw/lince_hineng/dev-00000-of-00001.parquet
+  token_col: sentence
+  label_col: labels
+  max_subtokens: 512        # mBERT limit incl. [CLS]/[SEP]; drops 2 train sentences
+  val_fraction: 0.1         # held out from train for early stopping
+  split_seed: 13            # fixed for all training seeds
+  cm_only: false            # true = train on code-mixed sentences only
+  cm_lang_tags: [lang1, lang2]
+
+model:
+  encoder_name: bert-base-multilingual-cased
+  use_bilstm: true          # false = BERT + softmax ablation
+  lstm_hidden: 256          # per direction -> 512 output (paper)
+  lstm_layers: 1
+  dropout: 0.5              # paper: 0.5 in the recurrent layer
+  head: softmax             # later: crf
+
+train:
+  seeds: [42, 43, 44]
+  batch_size: 32            # paper
+  max_epochs: 20            # paper
+  patience: 3
+  early_stop_metric: val_weighted_f1   # was val_loss (default)
+  lr_encoder: 2.0e-5        # typical BERT fine-tuning LR (paper's 1e-4 is ambiguous)
+  lr_head: 1.0e-3           # BiLSTM + classifier
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  grad_clip: 1.0
+
+output:
+  dir: outputs
